@@ -7,25 +7,21 @@ gem 'rails', '3.0.9'
 
 gem 'sqlite3'
 
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
-# gem 'ruby-debug'
-# gem 'ruby-debug19', :require => 'ruby-debug'
-
-# Bundle the extra gems:
-# gem 'bj'
-# gem 'nokogiri'
-# gem 'sqlite3-ruby', :require => 'sqlite3'
-# gem 'aws-s3', :require => 'aws/s3'
-
-# Bundle gems for the local environment. Make sure to
-# put test-only gems in this group so their generators
-# and rake tasks are available in development mode:
-# group :development, :test do
-#   gem 'webrat'
-# end
+group :test do
+  
+  # Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser. Among Nokogiri's many
+  # features is the ability to search documents via XPath or CSS3 selectors.
+  # XML is like violence - if it doesn’t solve your problems, you are not using
+  # enough of it.
+  gem 'nokogiri', "~> 1.5.0"
+  
+  # VCR provides a simple API to record and replay your test suite's HTTP
+  # interactions. It works with a variety of HTTP client libraries, HTTP
+  # stubbing libraries and testing frameworks.
+  gem 'vcr', '~> 1.10.0'
+  
+  # FakeWeb is a helper for faking web requests in Ruby. It works at a global
+  # level, without modifying code or writing extensive stubs.
+  gem 'fakeweb', '~> 1.3.0'
+  
+end
