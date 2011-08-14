@@ -7,6 +7,11 @@ gem 'rails', '3.0.9'
 
 gem 'sqlite3'
 
+
+group :development do
+  gem 'annotate', '2.4.0'
+end
+
 group :test do
   
   # Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser. Among Nokogiri's many
