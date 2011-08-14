@@ -44,6 +44,8 @@ module Gatherer
       card.artist       = artist_on_page(page)
       card.number       = number_on_page(page)
       card.rarity       = rarity_on_page(page)
+      card.description  = rules_text_on_page(page)
+      card.flavor       = flavor_text_on_page(page)
             
       card
     end
@@ -92,6 +94,24 @@ module Gatherer
         rarity = page.at_css("#{ROW_IDENTIFIER}rarityRow div.value span")
         rarity.content.strip if rarity
       end
+      
+      def rules_text_on_page(page)
+        lines = []
+        page.css("#{ROW_IDENTIFIER}textRow div.cardtextbox").each { |row| 
+          lines << row.inner_html
+        }
+
+        lines if lines.size > 0
+      end
+
+      def flavor_text_on_page(page)
+        lines = []
+        page.css("#{ROW_IDENTIFIER}flavorRow div.cardtextbox").each { |row|  
+          lines << row.inner_html
+        }
+
+        lines if lines.size > 0
+      end      
       
   end
 end
