@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110814123328) do
+ActiveRecord::Schema.define(:version => 20110814124034) do
 
   create_table "cards", :force => true do |t|
     t.string   "name"
@@ -20,6 +20,9 @@ ActiveRecord::Schema.define(:version => 20110814123328) do
     t.integer  "strength"
     t.integer  "toughness"
     t.string   "category"
+    t.integer  "number"
+    t.string   "artist"
+    t.string   "rarity"
   end
 
 end

@@ -41,7 +41,10 @@ module Gatherer
       card.strength     = power_on_page(page)
       card.toughness    = toughness_on_page(page)
       card.category     = type_on_page(page)
-      
+      card.artist       = artist_on_page(page)
+      card.number       = number_on_page(page)
+      card.rarity       = rarity_on_page(page)
+            
       card
     end
     
@@ -50,34 +53,44 @@ module Gatherer
       
       ROW_IDENTIFIER = '#ctl00_ctl00_ctl00_MainContent_SubContent_SubContent_'
             
-      # Returns the name of the card if present on the page.
       def name_on_page(page) 
         name = page.at_css("#{ROW_IDENTIFIER}nameRow div.value")
         name.content.strip if name
       end
       
-      # Returns the converted mana cost of the card if present on the page.  
       def converted_mana_cost_on_page(page)
         cost = page.at_css("#{ROW_IDENTIFIER}cmcRow div.value")
         cost.content.strip.to_i if cost
       end
 
-      # Returns the power of the card if present on the page.  
       def power_on_page(page) 
         p_t = page.at_css("#{ROW_IDENTIFIER}ptRow div.value")
         p_t.content.strip.split(/\s\/\s/).first.to_i if p_t
       end
 
-      # Returns the toughness of the card if present on the page.  
       def toughness_on_page(page)
         p_t = page.at_css("#{ROW_IDENTIFIER}ptRow div.value")
         p_t.content.strip.split(/\s\/\s/).last.to_i if p_t
       end
 
-      # Returns the type of the card if present on the page.  
       def type_on_page(page)
         type = page.at_css("#{ROW_IDENTIFIER}typeRow div.value")
         type.content.strip if type
+      end
+      
+      def artist_on_page(page)
+        artist = page.at_css("#{ROW_IDENTIFIER}artistRow div.value")
+        artist.content.strip if artist
+      end
+
+      def number_on_page(page)
+        number = page.at_css("#{ROW_IDENTIFIER}numberRow div.value")
+        number.content.strip.to_i if number
+      end
+
+      def rarity_on_page(page)
+        rarity = page.at_css("#{ROW_IDENTIFIER}rarityRow div.value span")
+        rarity.content.strip if rarity
       end
       
   end
