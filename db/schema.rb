@@ -10,12 +10,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110814121854) do
+ActiveRecord::Schema.define(:version => 20110814123328) do
 
   create_table "cards", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "cost"
+    t.integer  "strength"
+    t.integer  "toughness"
+    t.string   "category"
   end
 
 end

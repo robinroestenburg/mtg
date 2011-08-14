@@ -37,10 +37,10 @@ module Gatherer
     def get_card_details(page)
       card              = Card.new
       card.name         = name_on_page(page)
-      # card.cost         = converted_mana_cost_on_page(page)
-      # card.strength     = power_on_page(page)
-      # card.toughness    = toughness_on_page(page)
-      # card.category     = type_on_page(page)
+      card.cost         = converted_mana_cost_on_page(page)
+      card.strength     = power_on_page(page)
+      card.toughness    = toughness_on_page(page)
+      card.category     = type_on_page(page)
       
       card
     end

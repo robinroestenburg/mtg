@@ -16,12 +16,11 @@ class GathererDetailsTest < ActiveSupport::TestCase
     scraper = Gatherer::Details.new
     card = scraper.get_card_details(Nokogiri::HTML(@accorder_paladin_printed_html))
     
-    assert_equal  "Accorder Paladin",           card.name
-    assert_equal  2,                            card.cost
-    assert_equal  3,                            card.strength
-    assert_equal  1,                            card.toughness
-    assert_equal  "Creature — Human Knight",    card.category
-    
+    assert_equal "Accorder Paladin",           card.name
+    assert_equal 2,                            card.cost
+    assert_equal 3,                            card.strength
+    assert_equal 1,                            card.toughness
+    assert_equal "Creature — Human Knight",    card.category
   end
   
   private
