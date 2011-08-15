@@ -12,11 +12,11 @@ class Card < ActiveRecord::Base
     number      == o.number && 
     artist      == o.artist && 
     description == o.description && 
-    flavor      == flavor
+    flavor      == o.flavor
   rescue
     false
   end
-  
+    
 end
 
 
