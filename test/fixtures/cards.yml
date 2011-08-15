@@ -1,11 +1,65 @@
+# coding: utf-8
+
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  name: MyString
+accorder_paladin:
+  name: Accorder Paladin
+  cost: 2
+  strength: 3
+  toughness: 1
+  category: Creature — Human Knight
+  number: 1
+  artist: Kekai Kotaki
+  rarity: Uncommon
+  description: 
+    ["Battle cry <i>(Whenever this creature attacks, each other attacking creature gets +1/+0 until end of turn.)</i>"]
+  flavor: 
+    ["<i>\"I fight for the suns, the surface, and everything in between.\"</i>"]
 
-two:
-  name: MyString
+aether_charge:
+  name: Æther Charge
+  cost: 5
+  category: Enchantment
+  description:
+    ["Whenever a Beast comes into play under your control, you may have it deal 4 damage to target opponent."]
+  flavor: 
+    ["<i>\"Is it just me, or does that meteor have teeth?\"</i>"] 
+  number: 184
+  artist: Mark Brill
+  rarity: Uncommon
 
+biorhythm:
+  name: Biorhythm 
+  cost: 8
+  category: Sorcery
+  number: 247
+  artist: Ron Spears
+  rarity: Rare
+  description:
+    ["Each player's life total becomes the number of creatures he or she controls."]
+  flavor: 
+    ["<i>\"I have seen life's purpose, and now it is my own.\"</i>",
+     "—Kamahl, druid acolyte"]
+
+doom_cannon:
+  name: Doom Cannon
+  cost: 6
+  category: Artifact
+  number: 307
+  artist: Matthew Mitchell
+  rarity: Rare
+  description: 
+    ["As Doom Cannon comes into play, choose a creature type.",
+     "o3, ocT, Sacrifice a creature of the chosen type: Doom Cannon deals 3 damage to target creature or player."]
+
+black_lotus:
+  name: Black Lotus
+  cost: 0
+  category: Mono Artifact
+  artist: Christopher Rush
+  rarity: Rare
+  description: 
+    ["Adds 3 mana of any single color of your choice to your mana pool, then is discarded. Tapping this artifact can be played as an interrupt."]
 
 # == Schema Information
 #

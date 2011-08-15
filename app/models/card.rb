@@ -3,6 +3,20 @@ class Card < ActiveRecord::Base
   serialize :description
   serialize :flavor
 
+  def ==(o)
+    name        == o.name && 
+    cost        == o.cost && 
+    strength    == o.strength && 
+    toughness   == o.toughness &&
+    category    == o.category && 
+    number      == o.number && 
+    artist      == o.artist && 
+    description == o.description && 
+    flavor      == flavor
+  rescue
+    false
+  end
+  
 end
 
 
