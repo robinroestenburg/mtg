@@ -1,15 +1,22 @@
 require 'net/http'
+require 'uri'
 
 module Gatherer
   
-  class CheckList
+  class CheckListPage
+    
+    def initialize(set_name)
+      @page = 
+        Nokogiri::HTML(
+          open("#{GATHERER_BASE}/Search/Default.aspx?output=checklist&set=[%22" + URI.escape(set_name) + "%22]"))
+    end
     
     # Processes a checklist page of a set and returns an array of cards.
-    def get_card_identifiers(page)
+    def get_card_identifiers
 
       identifiers = []
 
-      page.css(CSS_CARD_ROW).each do |row|
+      @page.css(CSS_CARD_ROW).each do |row|
         identifier = get_card_identifier(row)
         identifiers << identifier
       end
@@ -31,82 +38,86 @@ module Gatherer
   
   end
   
-  class Details
+  class DetailsPage
     
-    
-    def get_card_details(page)
+    def initialize(identifier)
+      @page = 
+        Nokogiri::HTML(
+          open("#{GATHERER_BASE}/Card/Details.aspx?printed=true&multiverseid=" + identifier.to_s))
+    end
+        
+    def get_card_details
       card              = Card.new
-      card.name         = name_on_page(page)
-      card.cost         = converted_mana_cost_on_page(page)
-      card.strength     = power_on_page(page)
-      card.toughness    = toughness_on_page(page)
-      card.category     = type_on_page(page)
-      card.artist       = artist_on_page(page)
-      card.number       = number_on_page(page)
-      card.rarity       = rarity_on_page(page)
-      card.description  = rules_text_on_page(page)
-      card.flavor       = flavor_text_on_page(page)
+      card.name         = name_on_page
+      card.cost         = converted_mana_cost_on_page
+      card.strength     = power_on_page
+      card.toughness    = toughness_on_page
+      card.category     = type_on_page
+      card.artist       = artist_on_page
+      card.number       = number_on_page
+      card.rarity       = rarity_on_page
+      card.description  = rules_text_on_page
+      card.flavor       = flavor_text_on_page
             
       card
     end
-    
     
     private 
       
       ROW_IDENTIFIER = '#ctl00_ctl00_ctl00_MainContent_SubContent_SubContent_'
             
-      def name_on_page(page) 
-        name = page.at_css("#{ROW_IDENTIFIER}nameRow div.value")
+      def name_on_page
+        name = @page.at_css("#{ROW_IDENTIFIER}nameRow div.value")
         name.content.strip if name
       end
       
-      def converted_mana_cost_on_page(page)
-        cost = page.at_css("#{ROW_IDENTIFIER}cmcRow div.value")
+      def converted_mana_cost_on_page
+        cost = @page.at_css("#{ROW_IDENTIFIER}cmcRow div.value")
         cost.content.strip.to_i if cost
       end
 
-      def power_on_page(page) 
-        p_t = page.at_css("#{ROW_IDENTIFIER}ptRow div.value")
+      def power_on_page
+        p_t = @page.at_css("#{ROW_IDENTIFIER}ptRow div.value")
         p_t.content.strip.split(/\s\/\s/).first.to_i if p_t
       end
 
-      def toughness_on_page(page)
-        p_t = page.at_css("#{ROW_IDENTIFIER}ptRow div.value")
+      def toughness_on_page
+        p_t = @page.at_css("#{ROW_IDENTIFIER}ptRow div.value")
         p_t.content.strip.split(/\s\/\s/).last.to_i if p_t
       end
 
-      def type_on_page(page)
-        type = page.at_css("#{ROW_IDENTIFIER}typeRow div.value")
+      def type_on_page
+        type = @page.at_css("#{ROW_IDENTIFIER}typeRow div.value")
         type.content.strip if type
       end
       
-      def artist_on_page(page)
-        artist = page.at_css("#{ROW_IDENTIFIER}artistRow div.value")
+      def artist_on_page
+        artist = @page.at_css("#{ROW_IDENTIFIER}artistRow div.value")
         artist.content.strip if artist
       end
 
-      def number_on_page(page)
-        number = page.at_css("#{ROW_IDENTIFIER}numberRow div.value")
+      def number_on_page
+        number = @page.at_css("#{ROW_IDENTIFIER}numberRow div.value")
         number.content.strip.to_i if number
       end
 
-      def rarity_on_page(page)
-        rarity = page.at_css("#{ROW_IDENTIFIER}rarityRow div.value span")
+      def rarity_on_page
+        rarity = @page.at_css("#{ROW_IDENTIFIER}rarityRow div.value span")
         rarity.content.strip if rarity
       end
       
-      def rules_text_on_page(page)
+      def rules_text_on_page
         lines = []
-        page.css("#{ROW_IDENTIFIER}textRow div.cardtextbox").each { |row| 
+        @page.css("#{ROW_IDENTIFIER}textRow div.cardtextbox").each { |row| 
           lines << row.inner_html
         }
 
         lines if lines.size > 0
       end
 
-      def flavor_text_on_page(page)
+      def flavor_text_on_page
         lines = []
-        page.css("#{ROW_IDENTIFIER}flavorRow div.cardtextbox").each { |row|  
+        @page.css("#{ROW_IDENTIFIER}flavorRow div.cardtextbox").each { |row|  
           lines << row.inner_html
         }
 
@@ -114,4 +125,8 @@ module Gatherer
       end      
       
   end
+  
+  private
+   
+    GATHERER_BASE = 'http://gatherer.wizards.com/Pages'
 end
