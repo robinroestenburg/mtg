@@ -1,0 +1,42 @@
+<%
+  def fixture_data(name)
+    render_binary("#{::Rails.root.to_s}/test/fixtures/binaries/#{name}")
+  end
+
+  def render_binary(filename, indent_level = 4)
+    data = File.open(filename,'rb').read
+
+    indent = ""
+    indent_level.times{ indent << " " }
+
+    #YAML Generic binary representation, see http://yaml.org/type/binary.html
+    "!binary | \n#{indent}#{[data].pack('m').gsub(/\n/,"\n#{indent}")}\n"
+  end
+
+%>
+
+black_lotus:
+  size: 31668
+  data: <%= fixture_data("black_lotus.jpg") %>
+  content_type: image/jpeg
+  card: black_lotus
+
+accorder_paladin:
+  size: 30969
+  data: <%= fixture_data("accorder_paladin.jpg") %>
+  content_type: image/jpeg
+  card: accorder_paladin
+
+# == Schema Information
+#
+# Table name: card_images
+#
+#  id           :integer         not null, primary key
+#  size         :integer
+#  data         :binary
+#  content_type :string(255)
+#  created_at   :datetime
+#  updated_at   :datetime
+#  card_id      :integer
+#
+

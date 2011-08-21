@@ -10,7 +10,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110814124557) do
+ActiveRecord::Schema.define(:version => 20110817182654) do
+
+  create_table "card_images", :force => true do |t|
+    t.integer  "size"
+    t.binary   "data"
+    t.string   "content_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "card_id"
+  end
 
   create_table "cards", :force => true do |t|
     t.string   "name"
@@ -25,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20110814124557) do
     t.string   "rarity"
     t.string   "description"
     t.string   "flavor"
+    t.integer  "identifier"
   end
 
 end

@@ -1,7 +1,12 @@
 class Card < ActiveRecord::Base
 
+  validates_presence_of :name, :identifier
+  validates_uniqueness_of :identifier
+
   serialize :description
   serialize :flavor
+
+  has_one :card_image, :dependent => :destroy
 
   def ==(o)
     name        == o.name && 
@@ -12,12 +17,14 @@ class Card < ActiveRecord::Base
     number      == o.number && 
     artist      == o.artist && 
     description == o.description && 
-    flavor      == o.flavor
+    flavor      == o.flavor &&
+    identifier  == o.identifier
   rescue
     false
   end
     
 end
+
 
 
 # == Schema Information
@@ -37,5 +44,6 @@ end
 #  rarity      :string(255)
 #  description :string(255)
 #  flavor      :string(255)
+#  identifier  :integer
 #
 

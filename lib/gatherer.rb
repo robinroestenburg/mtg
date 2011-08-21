@@ -13,26 +13,18 @@ module Gatherer
     
     # Processes a checklist page of a set and returns an array of cards.
     def get_card_identifiers
-
-      identifiers = []
-
-      @page.css(CSS_CARD_ROW).each do |row|
-        identifier = get_card_identifier(row)
-        identifiers << identifier
-      end
-
-      identifiers
+      @page.css(CARD_ROW).map { |row| get_card_identifier(row) }
     end
 
     private
 
-      CSS_CARD_ROW = 'tr.cardItem'
-      CSS_LINK_TO_CARD = 'td.name a'
+      CARD_ROW = 'tr.cardItem'
+      LINK_TO_CARD = 'td.name a'
     
       # Processes a row on a checklist page of a set and returns the identifier 
       # represented by that row.
       def get_card_identifier(row)
-        card_link = row.at_css CSS_LINK_TO_CARD
+        card_link = row.at_css LINK_TO_CARD
         card_link['href'].slice(/\d+/)
       end
   
@@ -41,13 +33,15 @@ module Gatherer
   class DetailsPage
     
     def initialize(identifier)
+      @identifier = identifier
       @page = 
         Nokogiri::HTML(
-          open("#{GATHERER_BASE}/Card/Details.aspx?printed=true&multiverseid=" + identifier.to_s))
+          open("#{GATHERER_BASE}/Card/Details.aspx?printed=true&multiverseid=" + @identifier.to_s))
     end
         
     def get_card_details
       card              = Card.new
+      card.identifier   = @identifier
       card.name         = name_on_page
       card.cost         = converted_mana_cost_on_page
       card.strength     = power_on_page
