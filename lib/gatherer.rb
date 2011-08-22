@@ -24,7 +24,7 @@ module Gatherer
       # Processes a row on a checklist page of a set and returns the identifier 
       # represented by that row.
       def get_card_identifier(row)
-        card_link = row.at_css LINK_TO_CARD
+        card_link = row.at_css(LINK_TO_CARD)
         card_link['href'].slice(/\d+/)
       end
   
