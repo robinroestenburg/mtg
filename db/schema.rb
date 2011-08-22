@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110817182654) do
+ActiveRecord::Schema.define(:version => 20110822182035) do
 
   create_table "card_images", :force => true do |t|
     t.integer  "size"
@@ -19,6 +19,14 @@ ActiveRecord::Schema.define(:version => 20110817182654) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "card_id"
+  end
+
+  create_table "card_manas", :force => true do |t|
+    t.integer  "order"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "card_id"
+    t.integer  "mana_id"
   end
 
   create_table "cards", :force => true do |t|
@@ -35,6 +43,12 @@ ActiveRecord::Schema.define(:version => 20110817182654) do
     t.string   "description"
     t.string   "flavor"
     t.integer  "identifier"
+  end
+
+  create_table "manas", :force => true do |t|
+    t.string   "code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

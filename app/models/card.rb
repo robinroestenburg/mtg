@@ -8,6 +8,10 @@ class Card < ActiveRecord::Base
 
   has_one :card_image, :dependent => :destroy
 
+  has_many :card_mana
+  has_many :mana, :through => :card_mana
+  
+
   def ==(o)
     name        == o.name && 
     cost        == o.cost && 
