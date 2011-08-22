@@ -26,11 +26,9 @@ class CardTest < ActiveSupport::TestCase
 
   # Tests concerning the CardImage attribute of the Card model. 
 
-  test "should have a cardimage attribute" do
-    card = Card.new
-    card.card_image = card_images(:black_lotus)
-   
-    assert_not_nil  card.card_image
+  test "should have a readable and writable cardimage attribute" do
+    Card.respond_to? 'card_image'
+    Card.respond_to? 'card_image='
   end
   
   test "should have the right cardimage" do
