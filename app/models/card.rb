@@ -16,6 +16,7 @@ class Card < ActiveRecord::Base
     category    == o.category && 
     number      == o.number && 
     artist      == o.artist && 
+    rarity      == o.rarity && 
     description == o.description && 
     flavor      == o.flavor &&
     identifier  == o.identifier
