@@ -7,12 +7,13 @@ class CardManaTest < ActiveSupport::TestCase
   end
 end
 
+
 # == Schema Information
 #
 # Table name: card_manas
 #
 #  id         :integer         not null, primary key
-#  order      :integer
+#  mana_order :integer
 #  created_at :datetime
 #  updated_at :datetime
 #  card_id    :integer

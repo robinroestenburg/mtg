@@ -1,11 +1,17 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  code: MyString
+  code: 1
 
-two:
-  code: MyString
+red:
+  code: R
 
+white:
+  code: W
+
+blue:
+  code: B
+  
 # == Schema Information
 #
 # Table name: manas
