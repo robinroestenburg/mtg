@@ -9,9 +9,9 @@ class Card < ActiveRecord::Base
   has_one :card_image, :dependent => :destroy
 
   has_many :card_mana, :order => 'mana_order ASC'
-  has_many :mana, :through => :card_mana
+  has_many :mana, :through => :card_mana, 
+                  :order => 'card_manas.mana_order ASC'
   
-
   def ==(o)
     name        == o.name && 
     cost        == o.cost && 

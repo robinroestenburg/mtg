@@ -47,13 +47,14 @@ class CardTest < ActiveSupport::TestCase
   
   
   # Test concerning the CardMana and Mana association.
-  test "should have a list of mana elements" do
-    card = cards(:accorder_paladin)
-    card.mana << manas(:one)
-    card.mana << manas(:white)
-    
-    assert_equal 2, card.card_mana.size
-  end
+  test "should have a ordered list of mana elements" do
+     card = cards(:accorder_paladin)
+     card.card_mana.create(:mana_order => 2, :mana => manas(:white))
+     card.card_mana.create(:mana_order => 1, :mana => manas(:one))
+     
+     assert_equal Mana.find_by_code('1'), card.mana[0] 
+     assert_equal Mana.find_by_code('W'), card.mana[1]
+   end
   
   test "should have an ordered list of mana elements" do
     card = cards(:accorder_paladin)
