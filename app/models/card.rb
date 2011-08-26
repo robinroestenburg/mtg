@@ -11,23 +11,7 @@ class Card < ActiveRecord::Base
   has_many :card_mana, :order => 'mana_order ASC'
   has_many :mana, :through => :card_mana, 
                   :order => 'card_manas.mana_order ASC'
-  
-  def ==(o)
-    name        == o.name && 
-    cost        == o.cost && 
-    strength    == o.strength && 
-    toughness   == o.toughness &&
-    category    == o.category && 
-    number      == o.number && 
-    artist      == o.artist && 
-    rarity      == o.rarity && 
-    description == o.description && 
-    flavor      == o.flavor &&
-    identifier  == o.identifier
-  rescue
-    false
-  end
-    
+                    
 end
 
 

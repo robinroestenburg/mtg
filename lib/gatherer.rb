@@ -25,7 +25,7 @@ module Gatherer
       # represented by that row.
       def get_card_identifier(row)
         card_link = row.at_css(LINK_TO_CARD)
-        card_link['href'].slice(/\d+/)
+        card_link[:href].slice(/\d+/)
       end
   
   end
@@ -52,6 +52,7 @@ module Gatherer
       card.rarity       = rarity_on_page
       card.description  = rules_text_on_page
       card.flavor       = flavor_text_on_page
+      card.card_mana    = card_mana_on_page
             
       card
     end
@@ -118,6 +119,21 @@ module Gatherer
         lines if lines.size > 0
       end      
       
+      def card_mana_on_page
+        card_manas = []
+        @page.css(mana_images).each_with_index do |img, index|  
+          card_mana = CardMana.new
+          card_mana.mana_order = index
+          card_mana.mana = 
+            Mana.find_by_code(img[:alt][0]) || Mana.create!(code: img[:alt][0])
+          card_manas << card_mana
+        end
+        card_manas if card_manas.size > 0
+      end      
+      
+      def mana_images 
+        "#{ROW_IDENTIFIER}manaRow div.value img"
+      end
   end
   
   private

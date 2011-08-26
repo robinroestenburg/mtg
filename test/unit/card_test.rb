@@ -48,7 +48,7 @@ class CardTest < ActiveSupport::TestCase
   
   # Test concerning the CardMana and Mana association.
   test "should have a ordered list of mana elements" do
-     card = cards(:accorder_paladin)
+     card = Card.create(name: 'Foo', identifier: 1234)
      card.card_mana.create(:mana_order => 2, :mana => manas(:white))
      card.card_mana.create(:mana_order => 1, :mana => manas(:one))
      
@@ -57,7 +57,7 @@ class CardTest < ActiveSupport::TestCase
    end
   
   test "should have an ordered list of mana elements" do
-    card = cards(:accorder_paladin)
+    card = Card.create(name: 'Foo', identifier: 1234)
     card.card_mana.create(:mana_order => 2, :mana => manas(:white))
     card.card_mana.create(:mana_order => 1, :mana => manas(:one))
     

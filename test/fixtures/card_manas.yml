@@ -1,0 +1,49 @@
+# Accorderd Paladin
+ap_one:
+  card: accorder_paladin
+  mana: one
+  mana_order: 0
+  
+ap_w:
+  card: accorder_paladin
+  mana: white
+  mana_order: 1
+
+# Biorhythm  
+br_six:
+  card: biorhythm
+  mana: six
+  mana_order: 0
+  
+br_g1:
+  card: biorhythm
+  mana: green
+  mana_order: 1
+  
+br_g2:
+  card: biorhythm
+  mana: green
+  mana_order: 2
+
+# Black Lotus
+bl_zero:
+  card: black_lotus
+  mana: zero
+  mana_order: 0
+  
+# Doom Cannon
+dc_six:
+  card: doom_cannon
+  mana: six
+  mana_order: 0
+  
+# Aether Charge
+ac_four:
+  card: aether_charge
+  mana: four
+  mana_order: 0
+  
+ac_red:
+  card: aether_charge
+  mana: red
+  mana_order: 1

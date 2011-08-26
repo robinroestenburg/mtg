@@ -1,10 +1,23 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
+
+zero:
+  code: 0
+
 one:
   code: 1
 
+four:
+  code: 4
+
+six:
+  code: 6
+
 red:
   code: R
+
+green:
+  code: G
 
 white:
   code: W
