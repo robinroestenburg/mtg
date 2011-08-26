@@ -47,3 +47,15 @@ ac_red:
   card: aether_charge
   mana: red
   mana_order: 1
+# == Schema Information
+#
+# Table name: card_manas
+#
+#  id         :integer         not null, primary key
+#  mana_order :integer
+#  created_at :datetime
+#  updated_at :datetime
+#  card_id    :integer
+#  mana_id    :integer
+#
+
