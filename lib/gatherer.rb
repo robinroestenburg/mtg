@@ -121,18 +121,33 @@ module Gatherer
       
       def card_mana_on_page
         card_manas = []
-        @page.css(mana_images).each_with_index do |img, index|  
-          card_mana = CardMana.new
-          card_mana.mana_order = index
-          card_mana.mana = 
-            Mana.find_by_code(img[:alt][0]) || Mana.create!(code: img[:alt][0])
+        @page.css(mana_images).each_with_index do |img, index|
+          mana_code = determine_mana_code(img)  
+          card_mana = create_card_mana(mana_code, index)
           card_manas << card_mana
         end
-        card_manas if card_manas.size > 0
+        card_manas
       end      
       
       def mana_images 
-        "#{ROW_IDENTIFIER}manaRow div.value img"
+        "#{row_identifier}manaRow div.value img"
+      end
+      
+      def determine_mana_code(img)
+        img[:alt][0]
+      end
+      
+      def create_card_mana(code, index)
+        card_mana = CardMana.new
+        card_mana.mana_order = index
+        card_mana.mana = 
+          Mana.find_by_code(code) || Mana.create!(code: code)
+        
+        card_mana
+      end
+      
+      def row_identifier 
+        '#ctl00_ctl00_ctl00_MainContent_SubContent_SubContent_'      
       end
   end
   
