@@ -11,6 +11,7 @@ accorder_paladin:
   number: 1
   artist: Kekai Kotaki
   rarity: Uncommon
+  color: White
   description: 
     ["Battle cry <i>(Whenever this creature attacks, each other attacking creature gets +1/+0 until end of turn.)</i>"]
   flavor: 
@@ -28,6 +29,7 @@ aether_charge:
   number: 184
   artist: Mark Brill
   rarity: Uncommon
+  color: Red
   identifier: 12425
 
 biorhythm:
@@ -37,6 +39,7 @@ biorhythm:
   number: 247
   artist: Ron Spears
   rarity: Rare
+  color: Green
   description:
     ["Each player's life total becomes the number of creatures he or she controls."]
   flavor: 
@@ -51,6 +54,7 @@ doom_cannon:
   number: 307
   artist: Matthew Mitchell
   rarity: Rare
+  color: Colorless
   description: 
     ["As Doom Cannon comes into play, choose a creature type.",
      "o3, ocT, Sacrifice a creature of the chosen type: Doom Cannon deals 3 damage to target creature or player."]
@@ -62,9 +66,11 @@ black_lotus:
   category: Mono Artifact
   artist: Christopher Rush
   rarity: Rare
+  color: Colorless
   description: 
     ["Adds 3 mana of any single color of your choice to your mana pool, then is discarded. Tapping this artifact can be played as an interrupt."]
   identifier: 600
+
 
 # == Schema Information
 #
@@ -84,5 +90,6 @@ black_lotus:
 #  description :string(255)
 #  flavor      :string(255)
 #  identifier  :integer
+#  color       :string(255)
 #
 

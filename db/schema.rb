@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110822220743) do
+ActiveRecord::Schema.define(:version => 20110828120054) do
 
   create_table "card_images", :force => true do |t|
     t.integer  "size"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20110822220743) do
     t.string   "description"
     t.string   "flavor"
     t.integer  "identifier"
+    t.string   "color"
   end
 
   create_table "manas", :force => true do |t|

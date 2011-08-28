@@ -16,6 +16,7 @@ end
 
 
 
+
 # == Schema Information
 #
 # Table name: cards
@@ -34,5 +35,6 @@ end
 #  description :string(255)
 #  flavor      :string(255)
 #  identifier  :integer
+#  color       :string(255)
 #
 

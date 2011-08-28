@@ -11,23 +11,36 @@ module Gatherer
           open("#{GATHERER_BASE}/Search/Default.aspx?output=checklist&set=[%22" + URI.escape(set_name) + "%22]"))
     end
     
-    # Processes a checklist page of a set and returns an array of cards.
     def get_card_identifiers
       @page.css(CARD_ROW).map { |row| get_card_identifier(row) }
     end
-
+    
+    def get_card_color(identifier)
+      row = row_for_identifier(identifier)   
+      card_color_in_row(row)
+    end
+    
     private
 
       CARD_ROW = 'tr.cardItem'
       LINK_TO_CARD = 'td.name a'
-    
-      # Processes a row on a checklist page of a set and returns the identifier 
-      # represented by that row.
+      COLOR_OF_CARD = 'td.color'
+
       def get_card_identifier(row)
         card_link = row.at_css(LINK_TO_CARD)
         card_link[:href].slice(/\d+/)
       end
-  
+      
+      def row_for_identifier(identifier)
+        @page.css(CARD_ROW).select do |row| 
+          get_card_identifier(row).to_i == identifier
+        end
+      end
+        
+      def card_color_in_row(row) 
+        color = row.first.at_css(COLOR_OF_CARD)
+        color.content.strip if color  
+      end  
   end
   
   class DetailsPage
@@ -134,7 +147,7 @@ module Gatherer
       end
       
       def determine_mana_code(img)
-        img[:alt][0]
+        img[:alt].first
       end
       
       def create_card_mana(code, index)

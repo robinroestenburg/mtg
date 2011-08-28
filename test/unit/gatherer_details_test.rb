@@ -17,9 +17,15 @@ class GathererDetailsTest < ActiveSupport::TestCase
   BLACK_LOTUS_IDENTIFIER      = 600
   
   test "should return detailed information of the Accorder Paladin card" do
+    checklist = nil
+    VCR.use_cassette('checklist_pages') do
+      checklist = Gatherer::CheckListPage.new("Mirrodin Besieged")
+    end
+    
     VCR.use_cassette('detail_pages') do
       scraper = Gatherer::DetailsPage.new(ACCORDER_PALADIN_IDENTIFIER)
       card = scraper.get_card_details
+      card.color = checklist.get_card_color(card.identifier)
       assert_card_equal cards(:accorder_paladin), card
     end
   end
@@ -28,6 +34,7 @@ class GathererDetailsTest < ActiveSupport::TestCase
     VCR.use_cassette('detail_pages') do
       scraper = Gatherer::DetailsPage.new(AETHER_CHARD_IDENTIFIER)
       card = scraper.get_card_details
+      card.color = 'Red'
       assert_card_equal cards(:aether_charge), card
     end
   end
@@ -36,6 +43,7 @@ class GathererDetailsTest < ActiveSupport::TestCase
     VCR.use_cassette('detail_pages') do
       scraper = Gatherer::DetailsPage.new(BIORHYTHM_IDENTIFIER)
       card = scraper.get_card_details
+      card.color = 'Green'
       assert_card_equal cards(:biorhythm), card
     end
   end
@@ -44,6 +52,7 @@ class GathererDetailsTest < ActiveSupport::TestCase
     VCR.use_cassette('detail_pages') do
       scraper = Gatherer::DetailsPage.new(DOOM_CANNON_IDENTIFIER)
       card = scraper.get_card_details
+      card.color = 'Colorless'
       assert_card_equal cards(:doom_cannon), card
     end
   end  
@@ -52,6 +61,7 @@ class GathererDetailsTest < ActiveSupport::TestCase
     VCR.use_cassette('detail_pages') do
       scraper = Gatherer::DetailsPage.new(BLACK_LOTUS_IDENTIFIER)
       card = scraper.get_card_details
+      card.color = 'Colorless'
       assert_card_equal cards(:black_lotus), card
     end
   end  
@@ -67,6 +77,7 @@ class GathererDetailsTest < ActiveSupport::TestCase
       c.number      == o.number && 
       c.artist      == o.artist && 
       c.rarity      == o.rarity && 
+      c.color       == o.color &&
       c.description == o.description && 
       c.flavor      == o.flavor &&
       c.identifier  == o.identifier 
