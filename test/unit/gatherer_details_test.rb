@@ -34,7 +34,7 @@ class GathererDetailsTest < ActiveSupport::TestCase
     VCR.use_cassette('detail_pages') do
       scraper = Gatherer::DetailsPage.new(AETHER_CHARD_IDENTIFIER)
       card = scraper.get_card_details
-      card.color = 'Red'
+      card.color = Color.find_by_identifier('R')
       assert_card_equal cards(:aether_charge), card
     end
   end
@@ -43,7 +43,7 @@ class GathererDetailsTest < ActiveSupport::TestCase
     VCR.use_cassette('detail_pages') do
       scraper = Gatherer::DetailsPage.new(BIORHYTHM_IDENTIFIER)
       card = scraper.get_card_details
-      card.color = 'Green'
+      card.color = Color.find_by_identifier('G')
       assert_card_equal cards(:biorhythm), card
     end
   end
@@ -52,7 +52,6 @@ class GathererDetailsTest < ActiveSupport::TestCase
     VCR.use_cassette('detail_pages') do
       scraper = Gatherer::DetailsPage.new(DOOM_CANNON_IDENTIFIER)
       card = scraper.get_card_details
-      card.color = 'Colorless'
       assert_card_equal cards(:doom_cannon), card
     end
   end  
@@ -61,7 +60,6 @@ class GathererDetailsTest < ActiveSupport::TestCase
     VCR.use_cassette('detail_pages') do
       scraper = Gatherer::DetailsPage.new(BLACK_LOTUS_IDENTIFIER)
       card = scraper.get_card_details
-      card.color = 'Colorless'
       assert_card_equal cards(:black_lotus), card
     end
   end  
@@ -76,8 +74,6 @@ class GathererDetailsTest < ActiveSupport::TestCase
       c.category    == o.category && 
       c.number      == o.number && 
       c.artist      == o.artist && 
-      c.rarity      == o.rarity && 
-      c.color       == o.color &&
       c.description == o.description && 
       c.flavor      == o.flavor &&
       c.identifier  == o.identifier 
@@ -89,6 +85,18 @@ class GathererDetailsTest < ActiveSupport::TestCase
       b = o.card_mana.map { |cm| [cm.mana_order, cm.mana.code] }
       
       ((a | b) - (a & b)).empty?
+    end
+
+    full_message = build_message(msg, "? is not equal to ?.", c.rarity, o.rarity)
+    assert_block(full_message) do
+      (c.rarity.nil? && o.rarity.nil?) || 
+      (c.rarity.name == o.rarity.name)
+    end
+    
+    full_message = build_message(msg, "? is not equal to ?.", c.color, o.color)
+    assert_block(full_message) do
+      (c.color.nil? && o.color.nil?) || 
+      (c.color.name == o.color.name)
     end
   end
 

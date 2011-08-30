@@ -11,8 +11,13 @@ class Card < ActiveRecord::Base
   has_many :card_mana, :order => 'mana_order ASC'
   has_many :mana, :through => :card_mana, 
                   :order => 'card_manas.mana_order ASC'
-                    
+   
+  belongs_to :color
+  belongs_to :rarity
+                 
 end
+
+
 
 
 
@@ -31,10 +36,10 @@ end
 #  category    :string(255)
 #  number      :integer
 #  artist      :string(255)
-#  rarity      :string(255)
 #  description :string(255)
 #  flavor      :string(255)
 #  identifier  :integer
-#  color       :string(255)
+#  color_id    :integer
+#  rarity_id   :integer
 #
 

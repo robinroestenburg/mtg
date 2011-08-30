@@ -70,6 +70,8 @@ end
 
 
 
+
+
 # == Schema Information
 #
 # Table name: cards
@@ -84,10 +86,10 @@ end
 #  category    :string(255)
 #  number      :integer
 #  artist      :string(255)
-#  rarity      :string(255)
 #  description :string(255)
 #  flavor      :string(255)
 #  identifier  :integer
-#  color       :string(255)
+#  color_id    :integer
+#  rarity_id   :integer
 #
 

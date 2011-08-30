@@ -39,7 +39,10 @@ module Gatherer
         
       def card_color_in_row(row) 
         color = row.first.at_css(COLOR_OF_CARD)
-        color.content.strip if color  
+        color = color.content.strip
+        if color
+          Color.find_by_name(color) || Color.create!(identifier: color.first, name: color)
+        end  
       end  
   end
   
@@ -111,7 +114,10 @@ module Gatherer
 
       def rarity_on_page
         rarity = @page.at_css("#{ROW_IDENTIFIER}rarityRow div.value span")
-        rarity.content.strip if rarity
+        if rarity
+          rarity = rarity.content.strip
+          Rarity.find_or_create_by_name(name: rarity, identifier: rarity.first)
+        end
       end
       
       def rules_text_on_page
@@ -153,8 +159,7 @@ module Gatherer
       def create_card_mana(code, index)
         card_mana = CardMana.new
         card_mana.mana_order = index
-        card_mana.mana = 
-          Mana.find_by_code(code) || Mana.create!(code: code)
+        card_mana.mana = Mana.find_or_create_by_code(code: code)
         
         card_mana
       end
