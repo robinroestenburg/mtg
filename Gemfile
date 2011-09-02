@@ -7,6 +7,11 @@ gem 'rails', '3.0.9'
 
 gem 'sqlite3'
 
+# Delayed_job (or DJ) encapsulates the common pattern of asynchronously 
+# executing longer tasks in the background. It is a direct extraction from 
+# Shopify where the job table is responsible for a multitude of core tasks. 
+gem 'delayed_job', '~> 2.1.4'
+
 
 group :development do
   gem 'annotate', '2.4.0'

@@ -1,7 +1,33 @@
-require 'net/http'
-require 'uri'
+require 'nokogiri'
+require 'open-uri'
 
 module Gatherer
+  
+  class Scraper < Struct.new(:set_name)
+            
+      def perform 
+        cards = []
+        
+        checklist = CheckListPage.new(set_name)
+        logger.debug "Loaded checklist for #{set_name}."
+        
+        identifiers = checklist.get_card_identifiers
+        logger.debug "Parsed the checklist, found #{identifiers.size} identifiers."
+
+        identifiers.each do |identifier| 
+          # details = DetailsPage.new(identifier)
+          # card = details.get_card_details
+          # card.color = checklist.get_card_color(identifier)
+          # cards << card
+          
+          logger.debug "Processed card with identifier #{identifier}"
+        end
+        
+        logger.debug "Exiting task."
+      end
+    
+  end
+  
   
   class CheckListPage
     
@@ -33,7 +59,7 @@ module Gatherer
       
       def row_for_identifier(identifier)
         @page.css(CARD_ROW).select do |row| 
-          get_card_identifier(row).to_i == identifier
+          get_card_identifier(row) == identifier
         end
       end
         
@@ -41,9 +67,10 @@ module Gatherer
         color = row.first.at_css(COLOR_OF_CARD)
         color = color.content.strip
         if color
-          Color.find_by_name(color) || Color.create!(identifier: color.first, name: color)
+          Color.find_or_create_by_name(name: color, identifier: color.first)
         end  
       end  
+
   end
   
   class DetailsPage
@@ -152,7 +179,7 @@ module Gatherer
         "#{row_identifier}manaRow div.value img"
       end
       
-      def determine_mana_code(img)
+      def determine_mana_code(img) 
         img[:alt].first
       end
       
