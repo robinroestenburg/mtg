@@ -1,26 +1,24 @@
 require 'test_helper'
 
 class CardTest < ActiveSupport::TestCase
-  
+  include Factory::Syntax::Methods
   
   test "should not save card without name" do
-    card = Card.new
+    card = build(:card, :name => "")
 
     assert !card.valid?, "Card without name"
   end
 
   test "should not save card without identifier" do
-    card = Card.new
-    card.name = "Foo"
+    card = build(:card, :identifier => nil)
 
     assert !card.valid?, "Card without identifier"
   end
 
   test "should not save card with duplicate identifier" do
-    card = Card.new
-    card.name       = "Foo"
-    card.identifier = cards(:black_lotus).identifier
-
+    create(:card, :identifier => 1234)
+    
+    card = build(:card, :identifier => 1234)
     assert !card.valid?, "Saved card with duplicate identifier"
   end
 
@@ -31,9 +29,11 @@ class CardTest < ActiveSupport::TestCase
     Card.respond_to? 'card_image='
   end
   
-  test "should have the right cardimage" do
-    card = cards(:black_lotus)
-    assert_equal card_images(:black_lotus), card.card_image
+  test "should have a card image" do
+    card = Factory.build(:card, 
+                         :card_image => Factory.build(:card_image, :size => 42))
+    assert_not_nil card.card_image
+    assert_equal   42, card.card_image.size
   end
   
   test "should destroy associated cardimage" do

@@ -19,6 +19,15 @@ class NokogiriTest < ActiveSupport::TestCase
     assert_nil doc.at_css('td.foo')
   end
   
+  test "calling map on non-existing elements" do
+    html = '<table><tr><td class="bar">foo</td></tr></table>'
+    doc = Nokogiri::HTML(html)
+    
+    cells = doc.css('td.foo').map{ |cell| cell.content }
+    
+    assert_equal 0, cells.size
+  end
+  
   test "matching multiple elements" do
     html = '<table><tr><td class="foo">bar</td><td class="foo">baz</td><td>quux</td></tr></table>'
     doc = Nokogiri::HTML(html)

@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.9'
+gem 'rails', '3.0.10'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -15,6 +15,9 @@ gem 'delayed_job', '~> 2.1.4'
 
 group :development do
   gem 'annotate', '2.4.0'
+  
+  # RSpec-2 for Rails-3
+  gem "rspec-rails", "~> 2.6"
 end
 
 group :test do
@@ -34,4 +37,14 @@ group :test do
   # level, without modifying code or writing extensive stubs.
   gem 'fakeweb', '~> 1.3.0'
   
+  # factory_girl_rails provides integration between factory_girl and rails 3
+  # (currently just automatic factory definition loading)
+  gem "factory_girl_rails", "~> 1.1.0"
+  
+  # Mocking and stubbing library with JMock/SchMock syntax, which allows 
+  # mocking and stubbing of methods on real (non-mock) classes.
+  gem 'mocha', '~> 0.9.12'
+  
+  # RSpec-2 for Rails-3
+  gem "rspec-rails", "~> 2.6"
 end
