@@ -53,19 +53,17 @@ describe Card do
       card = Factory.create(:card)
       card.card_mana << Factory.create(:card_mana, 
                                        :mana_order => 2,
-				       :mana => Factory.create(:mana, 
-							       :code => '1'))
+				       :mana => Mana.find_by_code('1'))
       card.card_mana << Factory.create(:card_mana, 
 				       :mana_order => 1,
-				       :mana => Factory.create(:mana,
-							       :code => 'W'))
+				       :mana => Mana.find_by_code('W'))
       card.save
       card
     end
 
     it "has an ordered list of mana symbols" do
-      subject.card_mana[0].mana.code.should eq('W')
-      subject.card_mana[1].mana.code.should eq('1')
+      subject.mana.first.code.should eq('W')
+      subject.mana.last.code.should eq('1')
     end
   end 
 end
