@@ -1,7 +1,25 @@
 require 'spec_helper'
 
 describe Card do
-    
+
+  it { should respond_to(:identifier, 
+			 :name,
+			 :cost, 
+			 :strength,
+			 :toughness,
+			 :category,
+			 :description,
+			 :number,
+			 :flavor,
+                         :card_image,
+		         :mana,
+                         :color,
+                         :rarity,
+                         :card_mana) }  
+
+  # FIXME: Not sure if this is possible!
+  # it { should_not respond_to(:color_id, :rarity_id) } 
+  
   context "without a name and an identifier" do    
     it "fails validation" do
       subject.should have(1).error_on(:name)
@@ -48,15 +66,16 @@ describe Card do
   end
 
   context "with mana symbols" do
-  
+     
+    before do 
+      @white = Factory.create(:card_mana, :mana => Mana.find_by_code('W'))
+      @one   = Factory.create(:card_mana, :mana => Mana.find_by_code('1'))
+    end
+
     subject do
-      card = Factory.create(:card)
-      card.card_mana << Factory.create(:card_mana, 
-                                       :mana_order => 2,
-				       :mana => Mana.find_by_code('1'))
-      card.card_mana << Factory.create(:card_mana, 
-				       :mana_order => 1,
-				       :mana => Mana.find_by_code('W'))
+      card = Factory.build(:card)
+      card.card_mana << @one 
+      card.card_mana << @white
       card.save
       card
     end
@@ -66,4 +85,5 @@ describe Card do
       subject.mana.last.code.should eq('1')
     end
   end 
+
 end

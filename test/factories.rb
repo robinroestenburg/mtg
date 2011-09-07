@@ -23,11 +23,11 @@ Factory.define :card_image do |ci|
   ci.size 31668
 end
 
-Factory.define :mana do |m|
-  m.code "R"
+Factory.define :card_mana do |cm|
+  cm.sequence(:mana_order) { |n| n } 
+  cm.association :mana
 end
 
-Factory.define :card_mana do |cm|
-  cm.mana_order 1
-  cm.association :mana
+Factory.define :mana do |m|
+   m.code "R"
 end
