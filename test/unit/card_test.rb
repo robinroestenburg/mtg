@@ -3,49 +3,13 @@ require 'test_helper'
 class CardTest < ActiveSupport::TestCase
   include Factory::Syntax::Methods
   
-  test "should not save card without name" do
-    card = build(:card, :name => "")
-
-    assert !card.valid?, "Card without name"
-  end
-
-  test "should not save card without identifier" do
-    card = build(:card, :identifier => nil)
-
-    assert !card.valid?, "Card without identifier"
-  end
-
-  test "should not save card with duplicate identifier" do
-    create(:card, :identifier => 1234)
-    
-    card = build(:card, :identifier => 1234)
-    assert !card.valid?, "Saved card with duplicate identifier"
-  end
-
   # Tests concerning the CardImage attribute of the Card model. 
 
   test "should have a readable and writable cardimage attribute" do
     Card.respond_to? 'card_image'
     Card.respond_to? 'card_image='
   end
-  
-  test "should have a card image" do
-    card = Factory.build(:card, 
-                         :card_image => Factory.build(:card_image, :size => 42))
-    assert_not_nil card.card_image
-    assert_equal   42, card.card_image.size
-  end
-  
-  test "should destroy associated cardimage" do
-    card = cards(:black_lotus)
-    card.destroy
-  
-    assert_raise(ActiveRecord::RecordNotFound) { 
-      CardImage.find(card_images(:black_lotus)) 
-    }
-  end
-  
-  
+
   # Test concerning the CardMana and Mana association.
   test "should have a ordered list of mana elements" do
      card = Card.create(name: 'Foo', identifier: 1234)

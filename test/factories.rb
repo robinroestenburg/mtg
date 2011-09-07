@@ -22,3 +22,12 @@ Factory.define :card_image do |ci|
   ci.content_type "image/jpeg"
   ci.size 31668
 end
+
+Factory.define :mana do |m|
+  m.code "R"
+end
+
+Factory.define :card_mana do |cm|
+  cm.mana_order 1
+  cm.association :mana
+end
