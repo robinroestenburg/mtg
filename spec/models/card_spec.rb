@@ -71,23 +71,42 @@ describe Card do
   end
 
   context "with mana symbols" do
-     
-    before do 
-      @white = Factory.create(:card_mana, :mana => Mana.find_by_code('W'))
-      @one   = Factory.create(:card_mana, :mana => Mana.find_by_code('1'))
-    end
 
-    subject do
+    before do
+      # CardMana instance @one will have a lower value for the 'mana_order' 
+      # attribute than @two. 
+      @one = Factory.create(:card_mana)
+      @two = Factory.create(:card_mana)
+    end
+    
+    
+    subject do 
       card = Factory.build(:card)
+   
+      # Adding @two first will put @two the first element in the array, which 
+      # is (intentionally) incorrect.  
+      card.card_mana << @two 
       card.card_mana << @one 
-      card.card_mana << @white
       card.save
-      card
+
+      card.reload
+      
     end
 
+    it "has a list of mana symbols" do
+      subject.card_mana.size.should eq(2)
+      subject.mana.size.should eq(2)
+    end
+    
     it "has an ordered list of mana symbols" do
-      subject.mana.first.code.should eq('W')
-      subject.mana.last.code.should eq('1')
+      # Check the ordering on the join-model, CardMana.
+      subject.card_mana.first.mana_order.should eq(@one.mana_order)
+      subject.card_mana.last.mana_order.should eq(@two.mana_order)
+      
+      # Check the ordering on the has-many-through association on Mana through
+      # CardMana. 
+      subject.mana.first.code.should eq(@one.mana.code)
+      subject.mana.last.code.should eq(@two.mana.code)
     end
   
     it "should be able to remove mana symbol from card" do

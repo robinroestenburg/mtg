@@ -26,5 +26,5 @@ Factory.define :card_mana do |cm|
 end
 
 Factory.define :mana do |m|
-   m.code Faker::Name.first_name
+   m.sequence(:code) { Faker::Name.first_name }
 end
