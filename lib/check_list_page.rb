@@ -1,3 +1,5 @@
+require 'ostruct' 
+
 module Gatherer
 
   class CheckListPage
@@ -37,10 +39,11 @@ module Gatherer
       end
         
       def card_color_in_row(row) 
-        color = row.first.at_css(COLOR_OF_CARD)
-        color = color.content.strip
-        if color
-          Color.find_or_create_by_name(name: color, identifier: color.first)
+        cell = row.first.at_css(COLOR_OF_CARD)
+        color_name = cell.content.strip
+        if color_name
+          color = OpenStruct.new({ :name => name, 
+                                   :identifier => name.first })
         end  
       end  
 

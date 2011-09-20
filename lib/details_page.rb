@@ -1,18 +1,24 @@
+require 'ostruct' 
+
 module Gatherer
 
   class DetailsPage
    
+    attr_accessor :page
+
     GATHERER_BASE = 'http://gatherer.wizards.com/Pages'
-   
+  
     def initialize(identifier)
       @identifier = identifier
-      @page = 
-        Nokogiri::HTML(
-          open("#{GATHERER_BASE}/Card/Details.aspx?printed=true&multiverseid=" + @identifier.to_s))
+      @page = load_details_from_gatherer
     end
+
+    def load_details_from_gatherer
+      Nokogiri::HTML(open("#{GATHERER_BASE}/Card/Details.aspx?printed=true&multiverseid=" + @identifier.to_s))
+     end
         
     def get_card_details
-      card              = Card.new
+      card              = OpenStruct.new      
       card.identifier   = @identifier
       card.name         = name_on_page
       card.cost         = converted_mana_cost_on_page
@@ -29,7 +35,7 @@ module Gatherer
       card
     end
     
-    private 
+  
       
       ROW_IDENTIFIER = '#ctl00_ctl00_ctl00_MainContent_SubContent_SubContent_'
             
@@ -46,7 +52,7 @@ module Gatherer
       def power_on_page
         p_t = @page.at_css("#{ROW_IDENTIFIER}ptRow div.value")
         p_t.content.strip.split(/\s\/\s/).first.to_i if p_t
-      end
+      end 
 
       def toughness_on_page
         p_t = @page.at_css("#{ROW_IDENTIFIER}ptRow div.value")
@@ -69,10 +75,13 @@ module Gatherer
       end
 
       def rarity_on_page
-        rarity = @page.at_css("#{ROW_IDENTIFIER}rarityRow div.value span")
-        if rarity
-          rarity = rarity.content.strip
-          Rarity.find_or_create_by_name(name: rarity, identifier: rarity.first)
+        name = @page.at_css("#{ROW_IDENTIFIER}rarityRow div.value span")
+        
+        if name
+          name = name.content.strip
+          
+          rarity = OpenStruct.new({ :name => name, 
+                                    :identifier => name.first })
         end
       end
       
@@ -113,11 +122,8 @@ module Gatherer
       end
       
       def create_card_mana(code, index)
-        card_mana = CardMana.new
-        card_mana.mana_order = index
-        card_mana.mana = Mana.find_or_create_by_code(code: code)
-        
-        card_mana
+        OpenStruct.new({ :order => index, 
+                         :identifier => code }) 
       end
       
       def row_identifier 
