@@ -1,4 +1,8 @@
 class Color < ActiveRecord::Base
+
+  validates_presence_of :name, :identifier
+  validates_uniqueness_of :name, :identifier
+
 end
 
 # == Schema Information

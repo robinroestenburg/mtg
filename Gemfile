@@ -41,10 +41,14 @@ group :test do
   # (currently just automatic factory definition loading)
   gem "factory_girl_rails", "~> 1.1.0"
   
-  # Mocking and stubbing library with JMock/SchMock syntax, which allows 
-  # mocking and stubbing of methods on real (non-mock) classes.
-  gem 'mocha', '~> 0.9.12'
-  
   # RSpec-2 for Rails-3
   gem "rspec-rails", "~> 2.6"
+
+  # Faker, a port of Data::Faker from Perl, is used to easily generate fake data: names, addresses, phone numbers, etc.
+  gem "faker", "~> 1.0.0"
+
+  gem "cucumber-rails", "~> 1.0.5"
+
+  # Strategies for cleaning databases. Can be used to ensure a clean state for testing.
+  gem "database_cleaner", "~> 0.6.7"
 end

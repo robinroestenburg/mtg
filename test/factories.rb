@@ -1,20 +1,17 @@
 Factory.define :card do |c|
   c.name "Foo"
   
-  c.sequence(:identifier) { |n| n }  
-  
-  c.association :color
-  c.association :rarity
+  c.sequence(:identifier) { |n| n }
 end
 
 Factory.define :color do |c|
-  c.identifier "B"
-  c.name "Black"
+  c.identifier Faker::Name.first_name
+  c.name Faker::Name.name
 end
 
 Factory.define :rarity do |r|
-  r.identifier "Rare"
-  r.name "Rare"
+  r.identifier Faker::Name.first_name
+  r.name Faker::Name.name
 end
 
 Factory.define :card_image do |ci|
@@ -29,5 +26,5 @@ Factory.define :card_mana do |cm|
 end
 
 Factory.define :mana do |m|
-   m.code "R"
+   m.code Faker::Name.first_name
 end
