@@ -5,7 +5,7 @@ gem 'rails', '3.0.10'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+gem 'pg'
 
 # Delayed_job (or DJ) encapsulates the common pattern of asynchronously 
 # executing longer tasks in the background. It is a direct extraction from 
