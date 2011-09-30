@@ -61,4 +61,8 @@ group :test do
   # Strategies for cleaning databases. Can be used to ensure a clean state for 
   # testing.
   gem "database_cleaner", "~> 0.6.7"
+
+  # Code coverage for Ruby 1.9 with a powerful configuration library and 
+  # automatic merging of coverage across test suites.
+  gem "simplecov", :git => "https://github.com/colszowka/simplecov.git"
 end
